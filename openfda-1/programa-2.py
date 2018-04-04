@@ -1,3 +1,4 @@
+#Importamos los siguientes módulos que nos serán de utilidad para poder leer la información de la página web
 import http.client
 import json
 
@@ -12,6 +13,6 @@ conn.close()
 
 info = json.loads(datos_raw)['results']
 
+for elem in range(len(info)): #Con esto iteramos sobre los datos de los 10 medicamentos diferentes que queremos
+    print('El id del medicamento es:', info[elem]['id']) #Imprimimos todas las id de los medicamentos
 
-for elem in range(len(info)):
-    print('El id del medicamento es:', info[elem]['id'])

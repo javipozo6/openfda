@@ -10,8 +10,8 @@ print(r1.status, r1.reason)
 datos_raw = r1.read().decode("utf-8")
 conn.close()
 
-info = json.loads(datos_raw)
+info = json.loads(datos_raw)['results'][0]
 
-print('The product id is', info['results'][0]['id'])
-print("The purpose of the product is", info['results'][0]['purpose'])
-print('The manufacturer name is', info['results'][0]['openfda']['manufacturer_name'])
+print('The product id is', info['id'])
+print("The purpose of the product is", info['purpose'][0])
+print('The manufacturer name is', info['openfda']['manufacturer_name'][0])

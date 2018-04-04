@@ -1,3 +1,4 @@
+#Importamos los siguientes módulos que nos serán de utilidad para poder leer la información de la página web
 import http.client
 import json
 
@@ -12,6 +13,6 @@ conn.close()
 
 info = json.loads(datos_raw)['results'][0]
 
-print('The product id is', info['id'])
-print("The purpose of the product is", info['purpose'][0])
-print('The manufacturer name is', info['openfda']['manufacturer_name'][0])
+print('La id del producto es:', info['id']) #Accedemos a la id del producto
+print("El propósito del producto es:", info['purpose'][0]) #Accedemos al 'purpose' del producto
+print('El nombre del fabricante del producto es:', info['openfda']['manufacturer_name'][0]) #Accedemos al nombre del fabricante del producto

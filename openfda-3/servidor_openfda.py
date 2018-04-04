@@ -31,13 +31,12 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
     # GET. Este metodo se invoca automaticamente cada vez que hay una peticion GET por HTTP. El recurso que nos solicitan se encuentra en self.path
     def do_GET(self):
-        # La primera linea del mensaje de respuesta es el
-        # status. Indicamos que OK
+        #La primera linea del mensaje de respuesta es el status. Indicamos que OK
+
         self.send_response(200)
 
-        # En las siguientes lineas de la respuesta colocamos las
-        # cabeceras necesarias para que el cliente entienda el
-        # contenido que le enviamos (que sera HTML)
+        # En las siguientes lineas de la respuesta colocamos las cabeceras necesarias para que el cliente entienda el contenido que le enviamos (en HTML)
+
         self.send_header('Content-type', 'text/html')
         self.end_headers()
         #Aquí escribiremos el mensaje que queremos mostrar en html
@@ -45,7 +44,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         <body>
         <ol>"""
         message += "<h2>Los medicamentos son:</h3>"
-        for elem in medicamentos: #Iteramos sobre los elementos de la lista, y los escribimos en forma de lista ordenada(ol) en html
+        for elem in medicamentos: #Iteramos sobre los elementos de la lista, y los escribimos en forma de lista ordenada (ol) en html
             message += "<li type='disc'>" + elem + '</li>'
         message += """</ol>
         </body>

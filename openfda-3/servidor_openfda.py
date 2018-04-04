@@ -29,13 +29,13 @@ for i in range(len(info)):#Con esto iteramos sobre los datos de todos los difere
 
 class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
-    # GET. Este metodo se invoca automaticamente cada vez que hay una peticion GET por HTTP. El recurso que nos solicitan se encuentra en self.path
+    #GET. Este metodo se invoca automaticamente cada vez que hay una peticion GET por HTTP. El recurso que nos solicitan se encuentra en self.path
     def do_GET(self):
         #La primera linea del mensaje de respuesta es el status. Indicamos que OK
 
         self.send_response(200)
 
-        # En las siguientes lineas de la respuesta colocamos las cabeceras necesarias para que el cliente entienda el contenido que le enviamos (en HTML)
+        #En las siguientes lineas de la respuesta colocamos las cabeceras necesarias para que el cliente entienda el contenido que le enviamos (en HTML)
 
         self.send_header('Content-type', 'text/html')
         self.end_headers()
@@ -55,8 +55,8 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         return
 
 
-# El servidor comienza aqui
-# Establecemos como manejador nuestra propia clase
+#El servidor comienza aqui
+#Establecemos como manejador nuestra propia clase
 Handler = testHTTPRequestHandler
 
 #Se configura el socket del servidor, para esperar conexiones de clientes

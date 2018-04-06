@@ -15,7 +15,6 @@ conn.close()
 
 info = json.loads(datos_raw)['results'] #Convertimos la información a json
 
-
 for elem in range(len(info)): #Con esto iteramos sobre los datos de los diferentes medicamentos que tenemos
     print('El id del medicamento es:', info[elem]['id']) #Accedemos al id del medicamento
     #Si el nombre del fabricante es desconocido, saltará un KeyError, asi que lo evitamos con un try-except

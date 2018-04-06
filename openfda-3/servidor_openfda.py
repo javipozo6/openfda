@@ -9,15 +9,20 @@ PORT = 8000 #Puerto en el que se lanzará el servidor
 
 headers = {'User-Agent': 'http-client'}
 
-conn = http.client.HTTPSConnection("api.fda.gov")
-conn.request("GET", "/drug/label.json?&limit=100", None, headers)
-r1 = conn.getresponse()
-print(r1.status, r1.reason)
-datos_raw = r1.read().decode("utf-8")
+conn = http.client.HTTPSConnection("api.fda.gov") #Establecemos conexión con la página solicitada
+conn.request("GET", "/drug/label.json?&limit=100", None, headers) #GET: enviamos solicitud
+r1 = conn.getresponse() #Obtenemos la respuesta de la solicitud enviada
+
+if r1.status == 404: #Comprobamos si se ha podido encontrar el recurso correctamente (código 200), o si no se ha podido (código 404)
+    print("ERROR, recurso no encontrado.")
+    exit(1)
+
+print(r1.status, r1.reason) #Imprimimos el código de estado de la respuesta
+datos_raw = r1.read().decode("utf-8") #Convertimos la información para que sea legible
 medicamentos = [] #Se crea una lista para almacenar los nombres de los medicamentos
 conn.close()
 
-info = json.loads(datos_raw)['results']
+info = json.loads(datos_raw)['results'] #Convertimos la información a json
 
 for i in range(len(info)):#Con esto iteramos sobre los datos de todos los diferentes medicamentos
     if info[i]['openfda']:#Si esto existe, entonces entramos para coger el nombre del medicamento

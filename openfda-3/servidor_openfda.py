@@ -6,7 +6,6 @@ import json
 
 PORT = 8000 #Puerto en el que se lanzará el servidor
 
-
 headers = {'User-Agent': 'http-client'}
 
 conn = http.client.HTTPSConnection("api.fda.gov") #Establecemos conexión con la página solicitada

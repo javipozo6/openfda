@@ -4,7 +4,7 @@ import socketserver
 import http.client
 import json
 
-PORT = 8000
+PORT = 8000 #Puerto en el que se lanzará el servidor
 
 
 headers = {'User-Agent': 'http-client'}

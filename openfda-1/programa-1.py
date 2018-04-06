@@ -4,11 +4,11 @@ import json
 
 headers = {'User-Agent': 'http-client'}
 
-conn = http.client.HTTPSConnection("api.fda.gov")
-conn.request("GET", "/drug/label.json", None, headers)
-r1 = conn.getresponse()
-print(r1.status, r1.reason)
-datos_raw = r1.read().decode("utf-8")
+conn = http.client.HTTPSConnection("api.fda.gov") #Establecemos conexión con la página solicitada
+conn.request("GET", "/drug/label.json", None, headers) #GET: enviamos solicitud
+r1 = conn.getresponse() #Obtenemos la respuesta de la solicitud enviada
+print(r1.status, r1.reason) #Imprimimos el código de estado de la respuesta
+datos_raw = r1.read().decode("utf-8") #Convertimos la información para que sea legible
 conn.close()
 
 info = json.loads(datos_raw)['results'][0]

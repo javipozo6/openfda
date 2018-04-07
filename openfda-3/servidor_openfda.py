@@ -48,6 +48,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
         message += "<h2>Los medicamentos son:</h3>"
         for elem in medicamentos: #Iteramos sobre los elementos de la lista, y los escribimos en forma de lista ordenada (ol) en html
             message += "<li type='disc'>" + elem + '</li>'
+        message += "<a href= 'https://api.fda.gov/drug/label.json?&limit=100'> Los medicamentos se obtuvieron de aqui"
         message += """</ol>
         </body>
         </html>"""

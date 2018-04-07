@@ -17,8 +17,8 @@ info = json.loads(datos_raw)['results'] #Convertimos la información a json
 
 for elem in range(len(info)): #Con esto iteramos sobre los datos de los diferentes medicamentos que tenemos
     print('El id del medicamento es:', info[elem]['id']) #Accedemos al id del medicamento
-    #Si el nombre del fabricante es desconocido, saltará un KeyError, asi que lo evitamos con un try-except
-    try:
+    #Algunos nombres de fabricantes no están disponibles, asi que imponemos la siguiente condición
+    if info[elem]['openfda']:
         print('Su fabricante es:', info[elem]['openfda']['manufacturer_name'][0],'\n')
-    except KeyError:
+    else:
         print('El nombre del fabricante no está disponible\n')

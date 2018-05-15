@@ -120,8 +120,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             self.send_header('Content-type', 'text/html')
             self.end_headers()
             html = self.get_html()
-            self.wfile.write(
-                bytes(html, "utf8"))  # Escribimos la pagina en html llamando a la funcion creada anteriormente
+            self.wfile.write(bytes(html, "utf8"))  # Escribimos la pagina en html llamando a la funcion creada anteriormente
         elif 'listDrugs' in self.path:  # Si el recurso solicitado es 'listDrugs':
             self.send_response(200)
             self.send_header('Content-type', 'text/html')
@@ -135,8 +134,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
                     medicamentos.append(elem['openfda']['generic_name'][0])
                 else:
                     medicamentos.append('Unknown')  # Si no existe, añadimos que el nombre el medicamento es desconocido
-            medicamentos_html = self.get_data(
-                medicamentos)  # Para escribir los medicamentos en html llamamos a la función creada anteriormente
+            medicamentos_html = self.get_data(medicamentos)  # Para escribir los medicamentos en html llamamos a la función creada anteriormente
 
             self.wfile.write(bytes(medicamentos_html, "utf8"))  # Escribimos los medicamentos en html
         elif 'listCompanies' in self.path:  # Si el recurso solicitado es 'listCompanies':
@@ -144,16 +142,13 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             self.send_header('Content-type', 'text/html')
             self.end_headers()
             companies = []  # Creamos una lista para almacenar todos los nombres de empresas
-            info = self.get_results(
-                limit)  # Tomamos los resultados obtenidos en la función creada anteriormente (limit=1 por defecto)
+            info = self.get_results(limit)  # Tomamos los resultados obtenidos en la función creada anteriormente (limit=1 por defecto)
             for elem in info:  # Iteramos sobre los elementos de los resultados obtenidos anteriormente
-                if ('manufacturer_name' in elem[
-                    'openfda']):  # Si existe ese valor, almacenamos los datos que hay en él en la lista creada
+                if ('manufacturer_name' in elem['openfda']):  # Si existe ese valor, almacenamos los datos que hay en él en la lista creada
                     companies.append(elem['openfda']['manufacturer_name'][0])
                 else:
                     companies.append('Unknown')  # Si no existe, añadimos que el nombre el medicamento es desconocido
-            companies_html = self.get_data(
-                companies)  # Para escribir las empresas en html llamamos a la función creada anteriormente
+            companies_html = self.get_data(companies)  # Para escribir las empresas en html llamamos a la función creada anteriormente
 
             self.wfile.write(bytes(companies_html, "utf8"))  # Escribimos las empresas en html
         elif 'listWarnings' in self.path:  # Si el recurso solicitado es 'listWarnings':
@@ -161,15 +156,13 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             self.send_header('Content-type', 'text/html')
             self.end_headers()
             warnings = []  # Creamos una lista para almacenar todos los nombres de advertencias
-            info = self.get_results(
-                limit)  # Tomamos los resultados obtenidos en la función creada anteriormente (limit=1 por defecto)
+            info = self.get_results(limit)  # Tomamos los resultados obtenidos en la función creada anteriormente (limit=1 por defecto)
             for elem in info:  # Iteramos sobre los elementos de los resultados obtenidos anteriormente
                 if ('warnings' in elem):  # Si existe ese valor, almacenamos los datos que hay en él en la lista creada
                     warnings.append(elem['warnings'][0])
                 else:
                     warnings.append('Unknown')  # Si no existe, añadimos que el nombre el medicamento es desconocido
-            warnings_html = self.get_data(
-                warnings)  # Para escribir las advertencias en html llamamos a la función creada anteriormente
+            warnings_html = self.get_data(warnings)  # Para escribir las advertencias en html llamamos a la función creada anteriormente
 
             self.wfile.write(bytes(warnings_html, "utf8"))  # Escribimos las advertencias en html
         elif 'searchDrug' in self.path:  # Si el recurso solicitado es 'searchDrug':
@@ -182,22 +175,19 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
 
             drugs = []  # Creamos una lista para almacenar todos los nombres de medicamentos
             conn = http.client.HTTPSConnection(self.API_URL)  # Establecemos conexión con la página solicitada
-            conn.request("GET",
-                         self.API_EVENT + "?limit=" + str(limit) + self.SEARCH_DRUG + drug)  # GET: enviamos solicitud
+            conn.request("GET",self.API_EVENT + "?limit=" + str(limit) + self.SEARCH_DRUG + drug)  # GET: enviamos solicitud
             r1 = conn.getresponse()  # Obtenemos la respuesta de la solicitud enviada
             datos_raw = r1.read().decode('utf8')  # Convertimos la información para que sea legible
 
             info_drugs = json.loads(datos_raw)['results']  # Convertimos la información a json
 
             for elem in info_drugs:  # Iteramos sobre los elementos de los resultados obtenidos anteriormente
-                if ('generic_name' in elem[
-                    'openfda']):  # Si existe ese valor, almacenamos los datos que hay en él en la lista creada
+                if ('generic_name' in elem['openfda']):  # Si existe ese valor, almacenamos los datos que hay en él en la lista creada
                     drugs.append(elem['openfda']['generic_name'][0])
                 else:
                     drugs.append('Unknown')  # Si no existe, añadimos que el nombre el medicamento es desconocido
 
-            drugs_html = self.get_data(
-                drugs)  # Para escribir los medicamentos en html llamamos a la función creada anteriormente
+            drugs_html = self.get_data(drugs)  # Para escribir los medicamentos en html llamamos a la función creada anteriormente
             self.wfile.write(bytes(drugs_html, "utf8"))  # Escribimos los medicamentos en html
         elif 'searchCompany' in self.path:  # Si el recurso solicitado es 'searchCompany':
             self.send_response(200)
@@ -207,18 +197,15 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             company = self.path.split('=')[1]  # Dividimos el recurso y nos quedamos con el 2º valor
             companies = []  # Creamos una lista para almacenar todos los nombres de empresas
             conn = http.client.HTTPSConnection(self.API_URL)  # Establecemos conexión con la página solicitada
-            conn.request("GET", self.API_EVENT + "?limit=" + str(
-                limit) + self.SEARCH_COMPANY + company)  # GET: enviamos solicitud
+            conn.request("GET", self.API_EVENT + "?limit=" + str(limit) + self.SEARCH_COMPANY + company)  # GET: enviamos solicitud
             r1 = conn.getresponse()  # Obtenemos la respuesta de la solicitud enviada
             datos_raw = r1.read().decode('utf8')  # Convertimos la información para que sea legible
 
             info_companies = json.loads(datos_raw)['results']  # Convertimos la información a json
 
             for elem in info_companies:  # Iteramos sobre los elementos de los resultados obtenidos anteriormente
-                companies.append(elem['openfda']['manufacturer_name'][
-                                     0])  # Si existe ese valor, almacenamos los datos que hay en él en la lista creada
-            compañias_html = self.get_data(
-                companies)  # Para escribir las empresas en html llamamos a la función creada anteriormente
+                companies.append(elem['openfda']['manufacturer_name'][0])  # Si existe ese valor, almacenamos los datos que hay en él en la lista creada
+            compañias_html = self.get_data(companies)  # Para escribir las empresas en html llamamos a la función creada anteriormente
             self.wfile.write(bytes(compañias_html, "utf8"))  # Escribimos las empresas en html
         elif 'secret' in self.path:  # Si el recurso solicitado es 'secret':
             self.send_response(401)  # Nos devolverá el codigo 401 (Unauthorized)
@@ -232,8 +219,7 @@ class testHTTPRequestHandler(http.server.BaseHTTPRequestHandler):
             self.send_response(404)  # Nos devolverá el código 404 (error)
             self.send_header('Content-type', 'text/html')
             self.end_headers()
-            self.wfile.write("ERROR 404. Se desconoce el siguiente recurso solicitado: '{}'.".format(
-                self.path).encode())  # Se escribe un mensaje de error por pantalla
+            self.wfile.write("ERROR 404. Se desconoce el siguiente recurso solicitado: '{}'.".format(self.path).encode())  # Se escribe un mensaje de error por pantalla
         return
 
 
